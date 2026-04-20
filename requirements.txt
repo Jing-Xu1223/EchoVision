@@ -1,0 +1,8 @@
+datasets
+librosa
+numpy
+pandas
+soundfile
+torch
+tqdm
+yt-dlp

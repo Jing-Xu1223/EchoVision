@@ -1,0 +1,9 @@
+{
+  "best_val_micro_f1": 0.11827956941207075,
+  "best_val_threshold": 0.49999999999999994,
+  "epochs": 20,
+  "train_size": 83,
+  "val_size": 14,
+  "num_labels": 121,
+  "checkpoint_path": "artifacts/music_label_cnn/best_model.pt"
+}
