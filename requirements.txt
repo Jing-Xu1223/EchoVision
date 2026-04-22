@@ -1,8 +1,13 @@
+accelerate
 datasets
+diffusers
 librosa
 numpy
 pandas
+Pillow
+safetensors
 soundfile
 torch
 tqdm
+transformers
 yt-dlp

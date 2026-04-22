@@ -1,0 +1,17 @@
+{
+  "labels": [
+    "upbeat",
+    "electronic",
+    "futuristic"
+  ],
+  "prompt": "abstract atmospheric scene inspired by music. Musical character: upbeat, electronic, futuristic. cinematic digital painting, highly detailed, vibrant colors, professional composition, 4k, sharp focus",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame",
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "num_inference_steps": 35,
+  "guidance_scale": 7.5,
+  "height": 512,
+  "width": 512,
+  "seed": null,
+  "use_hf_token": false,
+  "output_path": "artifacts/generated/label_image.png"
+}

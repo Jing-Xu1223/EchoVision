@@ -126,3 +126,36 @@ After training:
 - `artifacts/music_label_cnn/best_model.pt`
 - `artifacts/music_label_cnn/history.json`
 - `artifacts/music_label_cnn/train_summary.json`
+
+## Stage 2: Label → Image (Stable Diffusion + prompt engineering)
+
+Uses a **pretrained** checkpoint (default: `runwayml/stable-diffusion-v1-5`, public on the Hub). Labels are turned into a positive and negative prompt, then an image is saved under `artifacts/generated/`.
+
+**If you see `401` / `Repository Not Found`:** an invalid `HF_TOKEN` in your environment often causes this. By default this project downloads **without** using that token (`token=False`). For gated Stability models, run `huggingface-cli login` and pass `--use-hf-token`, or fix/remove the bad token.
+
+Install generation dependencies (if not already):
+
+```bash
+pip install diffusers transformers accelerate safetensors Pillow
+```
+
+Run from predicted labels or any label list:
+
+```bash
+python3 src/run_label_to_image.py --labels "upbeat,electronic,futuristic"
+```
+
+Or JSON labels (e.g. from your own pipeline):
+
+```bash
+python3 src/run_label_to_image.py --labels-json '["mellow","piano melody","sad"]'
+```
+
+Optional flags: `--output`, `--model-id`, `--steps`, `--guidance`, `--seed`, `--device cuda|mps|cpu`, `--use-hf-token` (for gated / private repos).
+
+Outputs:
+
+- PNG image (default `artifacts/generated/label_image.png`)
+- Sidecar JSON with prompt and generation settings (same basename, `.json`)
+
+Programmatic use: `build_prompts(labels)` in `src/generation/prompt_builder.py`, then `generate_image(...)` in `src/generation/generate_image.py`.
