@@ -1,0 +1,13 @@
+{
+  "provider": "gemini",
+  "gemini_max_retries": 3,
+  "labels": [
+    "upbeat",
+    "electronic",
+    "futuristic"
+  ],
+  "model": "gemini-2.5-flash",
+  "image_prompt": null,
+  "explanation": "A high-energy, futuristic pulse beats through a sprawling metropolis, where towering obsidian spires pierce a twilight sky. Neon-rimmed data streams cascade down the polished glass facades, reflecting onto wet, brushed-metal streets below. Streaks of electric blue and vibrant magenta light blur from swift, silent vehicles zipping along elevated thoroughfares. Holographic projections shimmer in mid-air, casting an ethereal glow that catches the mist rising from subterranean vents. This vibrant scene hums with a clean, digital clarity, culminating in the dazzling expanse of a city perpetually illuminated by its own synthesized light.",
+  "text_output_path": "artifacts/explanations/label_explanation.txt"
+}

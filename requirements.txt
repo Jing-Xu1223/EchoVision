@@ -1,6 +1,8 @@
 accelerate
 datasets
 diffusers
+google-genai>=1.0
+openai
 librosa
 numpy
 pandas

@@ -1,0 +1,23 @@
+{
+  "labels": [
+    "instrumental",
+    "string section harmony",
+    "strings",
+    "no voice",
+    "mellow",
+    "instrumental music",
+    "slow tempo",
+    "amateur recording",
+    "loud electronic drums",
+    "female voice",
+    "noisy",
+    "low quality"
+  ],
+  "prompt": "abstract atmospheric scene inspired by music. Musical character: instrumental, string section harmony, strings, no voice, mellow, instrumental music, slow tempo, amateur recording. cinematic digital painting, highly detailed, vibrant colors, professional composition, 4k, sharp focus",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame",
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "num_inference_steps": 35,
+  "guidance_scale": 7.5,
+  "seed": null,
+  "output_path": "artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260424_202512/generated_image.png"
+}

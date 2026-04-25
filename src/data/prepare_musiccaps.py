@@ -12,6 +12,7 @@ Pipeline:
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import re
 import sys
@@ -58,13 +59,36 @@ def parse_aspects(aspect_value: Any) -> list[str]:
     if isinstance(aspect_value, list):
         raw_items = aspect_value
     else:
-        raw_items = re.split(r",|;|\|", str(aspect_value))
-    cleaned = []
+        s = str(aspect_value).strip()
+        raw_items: list[Any]
+        if s.startswith("[") and "]" in s:
+            parsed: Any = None
+            try:
+                parsed = ast.literal_eval(s)
+            except (ValueError, SyntaxError, TypeError):
+                try:
+                    parsed = json.loads(s)
+                except json.JSONDecodeError:
+                    parsed = None
+            if isinstance(parsed, list):
+                raw_items = parsed
+            else:
+                raw_items = re.split(r",|;|\|", s)
+        else:
+            raw_items = re.split(r",|;|\|", s)
+
+    cleaned: list[str] = []
     for item in raw_items:
         text = re.sub(r"\s+", " ", str(item).strip().lower())
+        while len(text) >= 2 and text[0] == text[-1] == "'":
+            text = text[1:-1].strip().lower()
+        while len(text) >= 2 and text[0] == text[-1] == '"':
+            text = text[1:-1].strip().lower()
+        text = re.sub(r"^[\[\('\"]+", "", text)
+        text = re.sub(r"[\]\)'\"]+$", "", text)
+        text = re.sub(r"\s+", " ", text).strip()
         if text:
             cleaned.append(text)
-    # Keep order while de-duplicating.
     return list(dict.fromkeys(cleaned))
 
 
