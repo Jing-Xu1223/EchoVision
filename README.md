@@ -102,6 +102,24 @@ Optional custom subset:
 python3 src/data/prepare_musiccaps.py --max-items 100
 ```
 
+Process a later window of the dataset (useful for resume/chunked runs):
+
+```bash
+python3 src/data/prepare_musiccaps.py --start-index 640 --max-items 60
+```
+
+Downloader reliability notes:
+
+- YouTube availability varies by ID; some failures are expected at scale.
+- The script now tries multiple format selectors automatically and falls back to no-cookies mode if browser-cookie extraction fails.
+- If browser cookies are unstable, prefer an exported cookie file:
+
+```bash
+python3 src/data/prepare_musiccaps.py \
+  --start-index 640 --max-items 60 \
+  --cookies-file /path/to/cookies.txt
+```
+
 ### 3) Train the CNN label model
 
 ```bash

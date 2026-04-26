@@ -33,6 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("data/processed/musiccaps"))
     parser.add_argument("--cache-dir", type=Path, default=Path("data/raw/musiccaps"))
     parser.add_argument("--split", type=str, default="train")
+    parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--max-items", type=int, default=100)
     parser.add_argument("--download-all", action="store_true")
     parser.add_argument("--sample-rate", type=int, default=16000)
@@ -43,6 +44,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--metadata-only", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--download-retries", type=int, default=3)
+    parser.add_argument(
+        "--cookies-from-browser",
+        type=str,
+        default=None,
+        help="Optional yt-dlp browser cookie source (e.g. chrome, safari, firefox).",
+    )
+    parser.add_argument(
+        "--cookies-file",
+        type=Path,
+        default=None,
+        help="Optional Netscape cookies.txt path (preferred over browser extraction).",
+    )
     return parser.parse_args()
 
 
@@ -105,6 +118,8 @@ def download_audio(
     youtube_id: str,
     cache_dir: Path,
     retries: int = 3,
+    cookies_from_browser: str | None = None,
+    cookies_file: Path | None = None,
     overwrite: bool = False,
 ) -> Path:
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -112,36 +127,70 @@ def download_audio(
     if output_path.exists() and not overwrite:
         return output_path
 
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "quiet": True,
-        "no_warnings": True,
-        "noplaylist": True,
-        "retries": retries,
-        "fragment_retries": retries,
-        "http_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/126.0.0.0 Safari/537.36"
-            )
-        },
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["android", "web"],
+    # Some YouTube videos do not expose the same audio format set. We try a few
+    # selectors from strict -> permissive to reduce "Requested format is not available".
+    format_candidates = [
+        "bestaudio*",
+        "bestaudio/best",
+        "best",
+    ]
+    cookie_modes: list[dict[str, Any]] = []
+    if cookies_file is not None:
+        cookie_modes.append({"cookiefile": str(cookies_file)})
+    elif cookies_from_browser:
+        # Keep this shape simple and robust across yt-dlp versions.
+        cookie_modes.append({"cookiesfrombrowser": (cookies_from_browser,)})
+    # Always include a no-cookie fallback so browser cookie failures do not abort long jobs.
+    cookie_modes.append({})
+
+    last_exc: Exception | None = None
+    for cookie_mode in cookie_modes:
+        for fmt in format_candidates:
+            ydl_opts = {
+                "format": fmt,
+                "quiet": True,
+                "no_warnings": True,
+                "noplaylist": True,
+                "retries": retries,
+                "fragment_retries": retries,
+                "http_headers": {
+                    "User-Agent": (
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/126.0.0.0 Safari/537.36"
+                    )
+                },
+                "extractor_args": {
+                    "youtube": {
+                        "player_client": ["android", "web"],
+                    }
+                },
+                "outtmpl": str(cache_dir / f"{youtube_id}.%(ext)s"),
+                "postprocessors": [
+                    {
+                        "key": "FFmpegExtractAudio",
+                        "preferredcodec": "wav",
+                        "preferredquality": "192",
+                    }
+                ],
             }
-        },
-        "outtmpl": str(cache_dir / f"{youtube_id}.%(ext)s"),
-        "postprocessors": [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "wav",
-                "preferredquality": "192",
-            }
-        ],
-    }
-    with YoutubeDL(ydl_opts) as ydl:
-        ydl.download([youtube_url(youtube_id)])
+            ydl_opts.update(cookie_mode)
+
+            try:
+                with YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([youtube_url(youtube_id)])
+                last_exc = None
+                break
+            except KeyboardInterrupt:
+                raise
+            except Exception as exc:  # noqa: BLE001
+                last_exc = exc
+                continue
+        if last_exc is None:
+            break
+
+    if last_exc is not None:
+        raise last_exc
 
     if not output_path.exists():
         raise FileNotFoundError(f"Failed to create audio file for {youtube_id}")
@@ -203,11 +252,17 @@ def main() -> int:
     args.cache_dir.mkdir(parents=True, exist_ok=True)
 
     dataset = load_dataset("google/MusicCaps", split=args.split)
+    if args.start_index < 0:
+        raise ValueError("--start-index must be >= 0")
     if args.download_all:
         args.max_items = None
 
+    start = min(args.start_index, len(dataset))
     if args.max_items is not None:
-        dataset = dataset.select(range(min(args.max_items, len(dataset))))
+        stop = min(start + args.max_items, len(dataset))
+    else:
+        stop = len(dataset)
+    dataset = dataset.select(range(start, stop))
 
     rows: list[dict[str, Any]] = []
     all_label_lists: list[list[str]] = []
@@ -241,6 +296,8 @@ def main() -> int:
                         youtube_id,
                         args.cache_dir,
                         retries=args.download_retries,
+                        cookies_from_browser=args.cookies_from_browser,
+                        cookies_file=args.cookies_file,
                         overwrite=args.overwrite,
                     )
                     audio = trim_and_resample(full_audio, start_s, duration_s, args.sample_rate)
