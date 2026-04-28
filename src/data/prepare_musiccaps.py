@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 """
 Prepare Google MusicCaps for the EchoVision music->label model.
-
-Pipeline:
-1) Load MusicCaps metadata from Hugging Face.
-2) Download and trim each YouTube clip to the labeled window.
-3) Convert audio to log-Mel spectrogram features.
-4) Build a multi-label target space from the aspect list field.
 """
 
 from __future__ import annotations
@@ -33,8 +27,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("data/processed/musiccaps"))
     parser.add_argument("--cache-dir", type=Path, default=Path("data/raw/musiccaps"))
     parser.add_argument("--split", type=str, default="train")
-    parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--max-items", type=int, default=100)
+    parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--download-all", action="store_true")
     parser.add_argument("--sample-rate", type=int, default=16000)
     parser.add_argument("--n-mels", type=int, default=128)
@@ -44,18 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--metadata-only", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--download-retries", type=int, default=3)
-    parser.add_argument(
-        "--cookies-from-browser",
-        type=str,
-        default=None,
-        help="Optional yt-dlp browser cookie source (e.g. chrome, safari, firefox).",
-    )
-    parser.add_argument(
-        "--cookies-file",
-        type=Path,
-        default=None,
-        help="Optional Netscape cookies.txt path (preferred over browser extraction).",
-    )
+    parser.add_argument("--cookies-from-browser", type=str, default=None)
     return parser.parse_args()
 
 
@@ -73,9 +56,8 @@ def parse_aspects(aspect_value: Any) -> list[str]:
         raw_items = aspect_value
     else:
         s = str(aspect_value).strip()
-        raw_items: list[Any]
         if s.startswith("[") and "]" in s:
-            parsed: Any = None
+            parsed = None
             try:
                 parsed = ast.literal_eval(s)
             except (ValueError, SyntaxError, TypeError):
@@ -90,7 +72,7 @@ def parse_aspects(aspect_value: Any) -> list[str]:
         else:
             raw_items = re.split(r",|;|\|", s)
 
-    cleaned: list[str] = []
+    cleaned = []
     for item in raw_items:
         text = re.sub(r"\s+", " ", str(item).strip().lower())
         while len(text) >= 2 and text[0] == text[-1] == "'":
@@ -106,7 +88,6 @@ def parse_aspects(aspect_value: Any) -> list[str]:
 
 
 def clean_error_text(message: str) -> str:
-    # Strip ANSI escape sequences from third-party CLI errors.
     return re.sub(r"\x1B\[[0-9;]*[A-Za-z]", "", message)
 
 
@@ -118,82 +99,51 @@ def download_audio(
     youtube_id: str,
     cache_dir: Path,
     retries: int = 3,
-    cookies_from_browser: str | None = None,
-    cookies_file: Path | None = None,
     overwrite: bool = False,
+    cookies_from_browser: str | None = None,
 ) -> Path:
     cache_dir.mkdir(parents=True, exist_ok=True)
     output_path = cache_dir / f"{youtube_id}.wav"
+
     if output_path.exists() and not overwrite:
         return output_path
 
-    # Some YouTube videos do not expose the same audio format set. We try a few
-    # selectors from strict -> permissive to reduce "Requested format is not available".
-    format_candidates = [
-        "bestaudio*",
-        "bestaudio/best",
-        "best",
-    ]
-    cookie_modes: list[dict[str, Any]] = []
-    if cookies_file is not None:
-        cookie_modes.append({"cookiefile": str(cookies_file)})
-    elif cookies_from_browser:
-        # Keep this shape simple and robust across yt-dlp versions.
-        cookie_modes.append({"cookiesfrombrowser": (cookies_from_browser,)})
-    # Always include a no-cookie fallback so browser cookie failures do not abort long jobs.
-    cookie_modes.append({})
-
-    last_exc: Exception | None = None
-    for cookie_mode in cookie_modes:
-        for fmt in format_candidates:
-            ydl_opts = {
-                "format": fmt,
-                "quiet": True,
-                "no_warnings": True,
-                "noplaylist": True,
-                "retries": retries,
-                "fragment_retries": retries,
-                "http_headers": {
-                    "User-Agent": (
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/126.0.0.0 Safari/537.36"
-                    )
-                },
-                "extractor_args": {
-                    "youtube": {
-                        "player_client": ["android", "web"],
-                    }
-                },
-                "outtmpl": str(cache_dir / f"{youtube_id}.%(ext)s"),
-                "postprocessors": [
-                    {
-                        "key": "FFmpegExtractAudio",
-                        "preferredcodec": "wav",
-                        "preferredquality": "192",
-                    }
-                ],
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]/bestaudio[ext=webm]/best[ext=mp4]/best",
+        "youtube_include_dash_manifest": False,
+        "quiet": True,
+        "no_warnings": True,
+        "noplaylist": True,
+        "retries": retries,
+        "fragment_retries": retries,
+        "http_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/126.0.0.0 Safari/537.36"
+            )
+        },
+        "outtmpl": str(cache_dir / f"{youtube_id}.%(ext)s"),
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "wav",
+                "preferredquality": "192",
             }
-            ydl_opts.update(cookie_mode)
+        ],
+    }
 
-            try:
-                with YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([youtube_url(youtube_id)])
-                last_exc = None
-                break
-            except KeyboardInterrupt:
-                raise
-            except Exception as exc:  # noqa: BLE001
-                last_exc = exc
-                continue
-        if last_exc is None:
-            break
+    if cookies_from_browser:
+        ydl_opts["cookiesfrombrowser"] = (cookies_from_browser,)
+        ydl_opts["sleep_interval"] = 2
+        ydl_opts["max_sleep_interval"] = 6
 
-    if last_exc is not None:
-        raise last_exc
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.download([youtube_url(youtube_id)])
 
     if not output_path.exists():
         raise FileNotFoundError(f"Failed to create audio file for {youtube_id}")
+
     return output_path
 
 
@@ -235,10 +185,11 @@ def audio_to_logmel(
 
 
 def build_vocab(items: list[list[str]], min_freq: int) -> list[str]:
-    counts: dict[str, int] = {}
+    counts = {}
     for labels in items:
         for label in labels:
             counts[label] = counts.get(label, 0) + 1
+
     vocab = [label for label, count in counts.items() if count >= min_freq]
     vocab.sort()
     return vocab
@@ -246,32 +197,32 @@ def build_vocab(items: list[list[str]], min_freq: int) -> list[str]:
 
 def main() -> int:
     args = parse_args()
+
     args.output_dir.mkdir(parents=True, exist_ok=True)
     (args.output_dir / "audio").mkdir(parents=True, exist_ok=True)
     (args.output_dir / "mel").mkdir(parents=True, exist_ok=True)
     args.cache_dir.mkdir(parents=True, exist_ok=True)
 
     dataset = load_dataset("google/MusicCaps", split=args.split)
-    if args.start_index < 0:
-        raise ValueError("--start-index must be >= 0")
+
+    start = max(0, args.start_index)
     if args.download_all:
-        args.max_items = None
-
-    start = min(args.start_index, len(dataset))
-    if args.max_items is not None:
-        stop = min(start + args.max_items, len(dataset))
+        end = len(dataset)
     else:
-        stop = len(dataset)
-    dataset = dataset.select(range(start, stop))
+        end = min(start + args.max_items, len(dataset))
 
-    rows: list[dict[str, Any]] = []
-    all_label_lists: list[list[str]] = []
-    failed: list[dict[str, str]] = []
+    dataset = dataset.select(range(start, end))
 
-    for idx, row in enumerate(tqdm(dataset, desc="Preparing MusicCaps")):
+    rows = []
+    all_label_lists = []
+    failed = []
+
+    for local_idx, row in enumerate(tqdm(dataset, desc="Preparing MusicCaps")):
+        global_idx = start + local_idx
+
         youtube_id = safe_key(row, ["ytid", "yt_id", "youtube_id"])
         if not youtube_id:
-            failed.append({"row_index": str(idx), "reason": "missing youtube id"})
+            failed.append({"row_index": str(global_idx), "reason": "missing youtube id"})
             continue
 
         start_s = float(safe_key(row, ["start_s", "start", "start_sec"], 0.0))
@@ -283,25 +234,25 @@ def main() -> int:
         label_list = parse_aspects(safe_key(row, ["aspect_list", "aspects", "tags"], []))
         all_label_lists.append(label_list)
 
-        example_id = f"{idx:05d}_{youtube_id}"
+        example_id = f"{global_idx:05d}_{youtube_id}"
         audio_file = args.output_dir / "audio" / f"{example_id}.wav"
         mel_file = args.output_dir / "mel" / f"{example_id}.npy"
 
         try:
             if not args.metadata_only:
-                if (audio_file.exists() and mel_file.exists() and not args.overwrite):
+                if audio_file.exists() and mel_file.exists() and not args.overwrite:
                     pass
                 else:
                     full_audio = download_audio(
-                        youtube_id,
-                        args.cache_dir,
+                        youtube_id=youtube_id,
+                        cache_dir=args.cache_dir,
                         retries=args.download_retries,
-                        cookies_from_browser=args.cookies_from_browser,
-                        cookies_file=args.cookies_file,
                         overwrite=args.overwrite,
+                        cookies_from_browser=args.cookies_from_browser,
                     )
                     audio = trim_and_resample(full_audio, start_s, duration_s, args.sample_rate)
                     sf.write(str(audio_file), audio, args.sample_rate)
+
                     mel = audio_to_logmel(
                         audio,
                         sample_rate=args.sample_rate,
@@ -310,9 +261,10 @@ def main() -> int:
                         hop_length=args.hop_length,
                     )
                     np.save(mel_file, mel)
-        except Exception as exc:  # noqa: BLE001
+
+        except Exception as exc:
             reason = clean_error_text(f"{type(exc).__name__}: {exc}")
-            failed.append({"row_index": str(idx), "reason": reason})
+            failed.append({"row_index": str(global_idx), "youtube_id": youtube_id, "reason": reason})
             continue
 
         rows.append(
@@ -349,11 +301,14 @@ def main() -> int:
     np.save(labels_path, labels_matrix)
     vocab_path.write_text(json.dumps(vocab, indent=2), encoding="utf-8")
     failed_path.write_text(json.dumps(failed, indent=2), encoding="utf-8")
+
     config_path.write_text(
         json.dumps(
             {
                 "dataset": "google/MusicCaps",
                 "split": args.split,
+                "start_index": start,
+                "end_index": end,
                 "sample_rate": args.sample_rate,
                 "n_mels": args.n_mels,
                 "n_fft": args.n_fft,
@@ -373,13 +328,14 @@ def main() -> int:
     print(f"Saved labels matrix: {labels_path} | shape={labels_matrix.shape}")
     print(f"Saved label vocab: {vocab_path} | size={len(vocab)}")
     print(f"Failed items: {len(failed)} -> {failed_path}")
+
     if len(rows) == 0 and not args.metadata_only:
         print(
-            "No examples were processed. Check failed_downloads.json for details. "
-            "If YouTube blocks downloads, try --metadata-only to inspect labels first.",
+            "No examples were processed. Check failed_downloads.json for details.",
             file=sys.stderr,
         )
         return 2
+
     return 0
 
 
