@@ -1,0 +1,71 @@
+{
+  "audio_path": "/Users/jingxu/Downloads/EchoVision/data/processed/musiccaps_full/audio/00471_3UHHjbO0ThM.wav",
+  "checkpoint": "/Users/jingxu/Downloads/EchoVision/artifacts/music_label_cnn/best_model.pt",
+  "preprocess": {
+    "sample_rate": 16000,
+    "n_mels": 128,
+    "n_fft": 1024,
+    "hop_length": 512
+  },
+  "target_frames": 320,
+  "threshold": 0.49999999999999994,
+  "labels": [
+    "instrumental",
+    "jazz",
+    "single instrument",
+    "no voices",
+    "slow tempo",
+    "western classical music",
+    "instrumental music",
+    "no percussion"
+  ],
+  "label_scores": [
+    {
+      "label": "instrumental",
+      "label_raw": "instrumental",
+      "probability": 0.5972435474395752
+    },
+    {
+      "label": "jazz",
+      "label_raw": "jazz",
+      "probability": 0.5771031975746155
+    },
+    {
+      "label": "single instrument",
+      "label_raw": "single instrument",
+      "probability": 0.5761111378669739
+    },
+    {
+      "label": "no voices",
+      "label_raw": "no voices",
+      "probability": 0.5730129480361938
+    },
+    {
+      "label": "slow tempo",
+      "label_raw": "slow tempo",
+      "probability": 0.567409098148346
+    },
+    {
+      "label": "western classical music",
+      "label_raw": "western classical music",
+      "probability": 0.5653573870658875
+    },
+    {
+      "label": "instrumental music",
+      "label_raw": "instrumental music",
+      "probability": 0.5564253330230713
+    },
+    {
+      "label": "no percussion",
+      "label_raw": "no percussion",
+      "probability": 0.5563002824783325
+    }
+  ],
+  "image_prompt": "music-inspired cinematic scene, grand timeless architecture under dramatic cinematic light. Musical cues: instrumental, jazz, single instrument, no voices, slow tempo, western classical music. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "image_path": "artifacts/echovision_runs/00471_3UHHjbO0ThM_20260428_185928/generated_image.png",
+  "image_meta_path": "artifacts/echovision_runs/00471_3UHHjbO0ThM_20260428_185928/image_generation.json",
+  "explanation_path": "artifacts/echovision_runs/00471_3UHHjbO0ThM_20260428_185928/explanation.txt",
+  "explanation_json_path": "artifacts/echovision_runs/00471_3UHHjbO0ThM_20260428_185928/explanation.json",
+  "output_dir": "/Users/jingxu/Downloads/EchoVision/artifacts/echovision_runs/00471_3UHHjbO0ThM_20260428_185928"
+}

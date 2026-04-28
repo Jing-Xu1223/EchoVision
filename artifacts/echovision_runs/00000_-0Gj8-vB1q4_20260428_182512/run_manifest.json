@@ -1,0 +1,71 @@
+{
+  "audio_path": "/Users/jingxu/Downloads/EchoVision/data/processed/musiccaps_full/audio/00000_-0Gj8-vB1q4.wav",
+  "checkpoint": "/Users/jingxu/Downloads/EchoVision/artifacts/music_label_cnn/best_model.pt",
+  "preprocess": {
+    "sample_rate": 16000,
+    "n_mels": 128,
+    "n_fft": 1024,
+    "hop_length": 512
+  },
+  "target_frames": 320,
+  "threshold": 0.49999999999999994,
+  "labels": [
+    "instrumental",
+    "jazz",
+    "no voices",
+    "slow tempo",
+    "heartfelt",
+    "no percussion",
+    "no voice",
+    "amateur recording"
+  ],
+  "label_scores": [
+    {
+      "label": "instrumental",
+      "label_raw": "instrumental",
+      "probability": 0.5390722751617432
+    },
+    {
+      "label": "jazz",
+      "label_raw": "jazz",
+      "probability": 0.5329029560089111
+    },
+    {
+      "label": "no voices",
+      "label_raw": "no voices",
+      "probability": 0.5308718085289001
+    },
+    {
+      "label": "slow tempo",
+      "label_raw": "slow tempo",
+      "probability": 0.5279245376586914
+    },
+    {
+      "label": "heartfelt",
+      "label_raw": "heartfelt",
+      "probability": 0.5229828357696533
+    },
+    {
+      "label": "no percussion",
+      "label_raw": "no percussion",
+      "probability": 0.5177605748176575
+    },
+    {
+      "label": "no voice",
+      "label_raw": "no voice",
+      "probability": 0.5168383717536926
+    },
+    {
+      "label": "amateur recording",
+      "label_raw": "amateur recording",
+      "probability": 0.5151674151420593
+    }
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: instrumental, jazz, no voices, slow tempo, heartfelt, no percussion. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "image_path": "artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260428_182512/generated_image.png",
+  "image_meta_path": "artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260428_182512/image_generation.json",
+  "explanation_path": "artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260428_182512/explanation.txt",
+  "explanation_json_path": "artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260428_182512/explanation.json",
+  "output_dir": "/Users/jingxu/Downloads/EchoVision/artifacts/echovision_runs/00000_-0Gj8-vB1q4_20260428_182512"
+}

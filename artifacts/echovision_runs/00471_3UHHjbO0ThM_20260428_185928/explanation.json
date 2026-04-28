@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "instrumental",
+    "jazz",
+    "single instrument",
+    "no voices",
+    "slow tempo",
+    "western classical music",
+    "instrumental music",
+    "no percussion"
+  ],
+  "image_prompt": "music-inspired cinematic scene, grand timeless architecture under dramatic cinematic light. Musical cues: instrumental, jazz, single instrument, no voices, slow tempo, western classical music. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "The grand hall is steeped in a hushed, contemplative stillness, echoing with the lingering resonance of a solitary melody. Thick shafts of late afternoon sun slice through towering arched windows, illuminating dancing dust motes above polished marble floors and the worn patina of ancient mahogany. Deep shadows pool in the corners, cast by colossal, fluted columns that rise into a vaulted ceiling of burnished bronze and muted fresco, lending the space a melancholic grandeur. The air itself feels heavy with unspoken narratives, as if a single, resonant note has just faded into the vast emptiness, leaving behind a profound sense of quietude. A lingering amber glow catches the intricate carvings of a distant balcony, painting its edges with a faint, ephemeral warmth against the encroaching twilight."
+}

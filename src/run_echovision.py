@@ -16,6 +16,7 @@ Example (use a real file path — not a placeholder):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -56,12 +57,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--duration-s", type=float, default=10.0, help="Seconds of audio to use (matches ~MusicCaps clip length)")
     p.add_argument("--target-frames", type=int, default=None, help="Override CNN time dimension (else from checkpoint)")
     p.add_argument("--threshold", type=float, default=None, help="Label probability threshold (else best_val_threshold from checkpoint)")
-    p.add_argument("--max-labels", type=int, default=12, help="Max labels passed to SD / LLM after thresholding")
+    p.add_argument("--max-labels", type=int, default=8, help="Max labels passed to SD / LLM after thresholding")
     p.add_argument("--min-top-k", type=int, default=5, help="If nothing passes threshold, take this many top labels by score")
 
     p.add_argument("--sd-model-id", type=str, default=None, help="Override Stable Diffusion model id")
-    p.add_argument("--sd-steps", type=int, default=35)
-    p.add_argument("--sd-guidance", type=float, default=7.5)
+    p.add_argument("--sd-steps", type=int, default=45)
+    p.add_argument("--sd-guidance", type=float, default=8.5)
     p.add_argument("--sd-seed", type=int, default=None)
     p.add_argument("--sd-device", type=str, default=None)
     p.add_argument("--use-hf-token", action="store_true")
@@ -210,6 +211,13 @@ def main() -> int:
 
         sd_model = DEFAULT_MODEL_ID
 
+    # Make seed deterministic per input audio by default so different clips
+    # produce different images while staying reproducible.
+    if args.sd_seed is None:
+        sd_seed = int(hashlib.sha256(str(args.audio.resolve()).encode("utf-8")).hexdigest()[:8], 16)
+    else:
+        sd_seed = args.sd_seed
+
     prompt, negative = build_prompts(labels)
 
     if not args.skip_image:
@@ -222,7 +230,7 @@ def main() -> int:
             guidance_scale=args.sd_guidance,
             height=512,
             width=512,
-            seed=args.sd_seed,
+            seed=sd_seed,
             device=args.sd_device,
             use_hf_token=args.use_hf_token,
         )
@@ -233,7 +241,7 @@ def main() -> int:
             "model_id": sd_model,
             "num_inference_steps": args.sd_steps,
             "guidance_scale": args.sd_guidance,
-            "seed": args.sd_seed,
+            "seed": sd_seed,
             "output_path": str(image_path),
         }
         image_meta_path.write_text(json.dumps(image_meta, indent=2), encoding="utf-8")

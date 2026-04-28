@@ -1,6 +1,6 @@
 __pycache__/
 *.py[cod]
 .DS_Store
-data/raw/
+data/raw/musiccaps/
 data/processed/musiccaps/audio/
 data/processed/musiccaps/mel/

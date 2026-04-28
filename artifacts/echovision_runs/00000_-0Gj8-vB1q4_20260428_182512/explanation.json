@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "instrumental",
+    "jazz",
+    "no voices",
+    "slow tempo",
+    "heartfelt",
+    "no percussion",
+    "no voice",
+    "amateur recording"
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: instrumental, jazz, no voices, slow tempo, heartfelt, no percussion. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "The city breathes a soft, melancholic hum under a slow, jazz-infused night. Volumetric light from distant street lamps diffuses through a fine, almost imperceptible mist, painting wet asphalt in muted streaks of amber and cool blue. The scene might open on a quiet, rain-slicked alleyway, where the brushed metal of a fire escape catches a faint, warm glow from a nearby, unseen window. A heartfelt, percussion-less melody, gently played, drifts faintly from a half-open sash in the midground, its slightly unpolished timbre adding to the raw, intimate atmosphere. Reflections shimmer on the pavement, mirroring the blurred neon glow of a distant sign, a silent, solitary symphony unfolding in the urban quiet."
+}

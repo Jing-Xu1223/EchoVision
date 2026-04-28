@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "instrumental",
+    "no voices",
+    "jazz",
+    "slow tempo",
+    "instrumental music",
+    "no percussion",
+    "western classical music",
+    "single instrument"
+  ],
+  "image_prompt": "music-inspired cinematic scene, grand timeless architecture under dramatic cinematic light. Musical cues: instrumental, no voices, jazz, slow tempo, instrumental music, no percussion. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "The scene unfolds with a contemplative, grand serenity, deep within the vast, shadowed hall of an abandoned concert venue. Soft, diffused light, the color of aged amber, pours through towering arched windows, illuminating dust motes that drift languidly in the heavy air, mirroring a slow, flowing tempo. Polished marble floors reflect the deep mahogany of empty, silent seats, their surfaces gleaming with a subtle, unpercussive sheen. A lone, barely visible spotlight catches the curve of a distant, unseen instrument, casting an elongated shadow across the ornate proscenium. This is the quiet dignity of `western classical music` meeting the introspective soul of `jazz`, culminating in the profound stillness of vast, echoing spaces, where a single, long shadow stretches endlessly across the polished marble floor."
+}

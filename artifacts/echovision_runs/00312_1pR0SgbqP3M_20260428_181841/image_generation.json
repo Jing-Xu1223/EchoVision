@@ -1,0 +1,19 @@
+{
+  "labels": [
+    "folk",
+    "groovy",
+    "upbeat",
+    "shimmering hi hats",
+    "hip hop",
+    "male voice",
+    "digital drums",
+    "acoustic guitar"
+  ],
+  "prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: folk, groovy, upbeat, shimmering hi hats, hip hop, male voice. bright rhythm, lively movement, saturated highlights. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "num_inference_steps": 45,
+  "guidance_scale": 8.5,
+  "seed": 12345,
+  "output_path": "artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841/generated_image.png"
+}

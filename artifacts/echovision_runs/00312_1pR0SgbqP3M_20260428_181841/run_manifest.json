@@ -1,0 +1,71 @@
+{
+  "audio_path": "/Users/jingxu/Downloads/EchoVision/data/processed/musiccaps_full/audio/00312_1pR0SgbqP3M.wav",
+  "checkpoint": "/Users/jingxu/Downloads/EchoVision/artifacts/music_label_cnn/best_model.pt",
+  "preprocess": {
+    "sample_rate": 16000,
+    "n_mels": 128,
+    "n_fft": 1024,
+    "hop_length": 512
+  },
+  "target_frames": 320,
+  "threshold": 0.49999999999999994,
+  "labels": [
+    "folk",
+    "groovy",
+    "upbeat",
+    "shimmering hi hats",
+    "hip hop",
+    "male voice",
+    "digital drums",
+    "acoustic guitar"
+  ],
+  "label_scores": [
+    {
+      "label": "folk",
+      "label_raw": "folk",
+      "probability": 0.569769561290741
+    },
+    {
+      "label": "groovy",
+      "label_raw": "groovy",
+      "probability": 0.5654359459877014
+    },
+    {
+      "label": "upbeat",
+      "label_raw": "upbeat",
+      "probability": 0.5544005036354065
+    },
+    {
+      "label": "shimmering hi hats",
+      "label_raw": "shimmering hi hats",
+      "probability": 0.5475425124168396
+    },
+    {
+      "label": "hip hop",
+      "label_raw": "hip hop",
+      "probability": 0.5469285249710083
+    },
+    {
+      "label": "male voice",
+      "label_raw": "male voice",
+      "probability": 0.5454734563827515
+    },
+    {
+      "label": "digital drums",
+      "label_raw": "digital drums",
+      "probability": 0.5437156558036804
+    },
+    {
+      "label": "acoustic guitar",
+      "label_raw": "acoustic guitar",
+      "probability": 0.5401022434234619
+    }
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: folk, groovy, upbeat, shimmering hi hats, hip hop, male voice. bright rhythm, lively movement, saturated highlights. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "image_path": "artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841/generated_image.png",
+  "image_meta_path": "artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841/image_generation.json",
+  "explanation_path": "artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841/explanation.txt",
+  "explanation_json_path": "artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841/explanation.json",
+  "output_dir": "/Users/jingxu/Downloads/EchoVision/artifacts/echovision_runs/00312_1pR0SgbqP3M_20260428_181841"
+}

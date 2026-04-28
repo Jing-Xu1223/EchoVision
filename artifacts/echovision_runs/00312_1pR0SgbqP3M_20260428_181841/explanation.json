@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "folk",
+    "groovy",
+    "upbeat",
+    "shimmering hi hats",
+    "hip hop",
+    "male voice",
+    "digital drums",
+    "acoustic guitar"
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: folk, groovy, upbeat, shimmering hi hats, hip hop, male voice. bright rhythm, lively movement, saturated highlights. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "The scene unfolds in a sprawling urban environment at the cusp of evening, where the last light of day\u2014a warm, amber glow\u2014filters through a haze of city dust, painting one side of glass high-rises in soft, inviting tones. Below, the street pulses with a groovy, upbeat energy: digital billboards flash in crisp, rhythmic patterns, casting sharp, synthetic blues and fuchsias that contrast"
+}

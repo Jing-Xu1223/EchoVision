@@ -1,0 +1,19 @@
+{
+  "labels": [
+    "instrumental",
+    "no voices",
+    "jazz",
+    "slow tempo",
+    "instrumental music",
+    "no percussion",
+    "western classical music",
+    "single instrument"
+  ],
+  "prompt": "music-inspired cinematic scene, grand timeless architecture under dramatic cinematic light. Musical cues: instrumental, no voices, jazz, slow tempo, instrumental music, no percussion. cinematic mood with balanced color contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "num_inference_steps": 45,
+  "guidance_scale": 8.5,
+  "seed": null,
+  "output_path": "artifacts/echovision_runs/00069_-eDAoheZrY8_20260428_180123/generated_image.png"
+}

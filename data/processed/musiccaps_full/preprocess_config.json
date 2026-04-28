@@ -1,0 +1,13 @@
+{
+  "dataset": "google/MusicCaps",
+  "split": "train",
+  "sample_rate": 16000,
+  "n_mels": 128,
+  "n_fft": 1024,
+  "hop_length": 512,
+  "min_label_frequency": 5,
+  "metadata_only": false,
+  "processed_items": 623,
+  "failed_items": 4898,
+  "vocab_size": 1462
+}

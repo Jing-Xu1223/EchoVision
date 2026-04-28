@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "lively",
+    "upbeat",
+    "male voice",
+    "energetic",
+    "bass",
+    "emotional",
+    "mono",
+    "groovy bass"
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: lively, upbeat, male voice, energetic, bass, emotional. high energy, dynamic motion trails, vivid contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "The scene pulses with a lively, almost visceral energy, opening on a rain-slicked metropolis at dusk. Deep indigo shadows cling to towering glass and steel, broken by streaks of electric blue neon and the warm, blurred glow of amber headlights. Reflections of a distant, vibrant cityscape ripple across the wet asphalt foreground, mirroring the rhythmic thrum of an unseen, groovy bassline that seems to vibrate the very air. A single, strong shaft of light, almost mono in its focus, cuts through the humid air, highlighting the silhouette of a commanding figure against a backdrop of dynamic, blurred motion, hinting at an emotional depth beneath the high-octane surface. Every gleam and shadow feels charged, a vibrant symphony of light and movement culminating in the sharp, solitary glint off a polished chrome sign as a car whips past, leaving a momentary void of sound."
+}

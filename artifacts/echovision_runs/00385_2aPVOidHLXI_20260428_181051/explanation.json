@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "shimmering hi hats",
+    "upbeat",
+    "groovy",
+    "male voice",
+    "folk",
+    "moderate tempo",
+    "keyboard",
+    "uptempo"
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: shimmering hi hats, upbeat, groovy, male voice, folk, moderate tempo. bright rhythm, lively movement, saturated highlights. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "explanation": "A late afternoon sun, low and golden, washes over a bustling city square, imbuing the air with a warm, inviting energy. Reflections from puddles on the wet asphalt shimmer with every passing car, catching a bright, rhythmic glint akin to unseen hi-hats. A lively, groovy hum pulses from a small gathering around a lone figure, whose keyboard notes drift through the crisp air, anchoring the scene with a moderate, uptempo beat. This moment feels infused with the grounded, storytelling essence of a male voice, perhaps a busker, amplified just enough to carry above the urban murmur. Deep shadows stretch long from wrought-iron lampposts, contrasting with the saturated highlights that catch on brushed metal railings and the vibrant clothes of passersby. The scene is a spontaneous street serenade, a bright rhythm blooming amidst the urban grit, culminating in a single, sparkling glint off a rain-slicked windowpane high above."
+}

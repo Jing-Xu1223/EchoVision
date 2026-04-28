@@ -1,0 +1,19 @@
+{
+  "labels": [
+    "lively",
+    "upbeat",
+    "male voice",
+    "energetic",
+    "bass",
+    "emotional",
+    "mono",
+    "groovy bass"
+  ],
+  "prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: lively, upbeat, male voice, energetic, bass, emotional. high energy, dynamic motion trails, vivid contrast. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "num_inference_steps": 45,
+  "guidance_scale": 8.5,
+  "seed": null,
+  "output_path": "artifacts/echovision_runs/00615_4vGLTrW04UE_20260428_180657/generated_image.png"
+}

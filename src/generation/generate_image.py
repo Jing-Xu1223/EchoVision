@@ -76,8 +76,9 @@ def generate_image(
     if dev == "mps":
         pipe.enable_attention_slicing()
 
-    gen = torch.Generator(device=dev)
+    gen = None
     if seed is not None:
+        gen = torch.Generator(device=dev)
         gen.manual_seed(seed)
 
     result = pipe(

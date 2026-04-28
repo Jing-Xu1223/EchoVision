@@ -1,0 +1,71 @@
+{
+  "audio_path": "/Users/jingxu/Downloads/EchoVision/data/processed/musiccaps_full/audio/00385_2aPVOidHLXI.wav",
+  "checkpoint": "/Users/jingxu/Downloads/EchoVision/artifacts/music_label_cnn/best_model.pt",
+  "preprocess": {
+    "sample_rate": 16000,
+    "n_mels": 128,
+    "n_fft": 1024,
+    "hop_length": 512
+  },
+  "target_frames": 320,
+  "threshold": 0.49999999999999994,
+  "labels": [
+    "shimmering hi hats",
+    "upbeat",
+    "groovy",
+    "male voice",
+    "folk",
+    "moderate tempo",
+    "keyboard",
+    "uptempo"
+  ],
+  "label_scores": [
+    {
+      "label": "shimmering hi hats",
+      "label_raw": "shimmering hi hats",
+      "probability": 0.5570757389068604
+    },
+    {
+      "label": "upbeat",
+      "label_raw": "upbeat",
+      "probability": 0.5456613302230835
+    },
+    {
+      "label": "groovy",
+      "label_raw": "groovy",
+      "probability": 0.5370163321495056
+    },
+    {
+      "label": "male voice",
+      "label_raw": "male voice",
+      "probability": 0.5357697010040283
+    },
+    {
+      "label": "folk",
+      "label_raw": "folk",
+      "probability": 0.5347011685371399
+    },
+    {
+      "label": "moderate tempo",
+      "label_raw": "moderate tempo",
+      "probability": 0.5323631763458252
+    },
+    {
+      "label": "keyboard",
+      "label_raw": "keyboard",
+      "probability": 0.5290551781654358
+    },
+    {
+      "label": "uptempo",
+      "label_raw": "uptempo",
+      "probability": 0.5211681723594666
+    }
+  ],
+  "image_prompt": "music-inspired cinematic scene, cinematic urban environment with depth and atmosphere. Musical cues: shimmering hi hats, upbeat, groovy, male voice, folk, moderate tempo. bright rhythm, lively movement, saturated highlights. cinematic digital painting, highly detailed, volumetric lighting, rich textures, dramatic composition, foreground-midground-background depth, sharp focus, high detail, 4k",
+  "negative_prompt": "blurry, low quality, worst quality, jpeg artifacts, watermark, signature, text, logo, deformed, ugly, duplicate, cropped, out of frame, flat lighting, overexposed, underexposed, plain background, simple gradient, low contrast, muddy colors",
+  "image_path": "artifacts/echovision_runs/00385_2aPVOidHLXI_20260428_181051/generated_image.png",
+  "image_meta_path": "artifacts/echovision_runs/00385_2aPVOidHLXI_20260428_181051/image_generation.json",
+  "explanation_path": "artifacts/echovision_runs/00385_2aPVOidHLXI_20260428_181051/explanation.txt",
+  "explanation_json_path": "artifacts/echovision_runs/00385_2aPVOidHLXI_20260428_181051/explanation.json",
+  "output_dir": "/Users/jingxu/Downloads/EchoVision/artifacts/echovision_runs/00385_2aPVOidHLXI_20260428_181051"
+}
