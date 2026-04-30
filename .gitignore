@@ -4,3 +4,5 @@ __pycache__/
 data/raw/musiccaps/
 data/processed/musiccaps/audio/
 data/processed/musiccaps/mel/
+data/processed/musiccaps_full/audio/
+data/processed/musiccaps_full/mel/
